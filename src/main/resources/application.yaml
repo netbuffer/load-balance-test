@@ -1,0 +1,18 @@
+banner:
+  location: banner.txt
+  charset: UTF-8
+  image:
+    location: docker.jpg
+spring:
+  application:
+    name: load-balance-test
+management:
+  context-path: /info
+  security:
+    enabled: false
+  add-application-context-header: false
+  port: 0
+server:
+  port: 9999
+logging:
+  config: classpath:logback-spring-boot.xml

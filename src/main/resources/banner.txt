@@ -1,0 +1,3 @@
+${AnsiColor.RED}${AnsiStyle.BOLD}${AnsiStyle.UNDERLINE}application-title:${application.title}
+${AnsiColor.BLUE}${AnsiBackground.BRIGHT_BLACK}spring-boot.version:${spring-boot.version}
+${AnsiColor.BRIGHT_CYAN}application.version:${application.version}

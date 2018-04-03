@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title th:text="${env.getProperty('spring.application.name')}"></title>
+</head>
+<body>
+    server.port:<span th:text="${env.getProperty('server.port')}"></span><br/>
+</body>
+</html>
