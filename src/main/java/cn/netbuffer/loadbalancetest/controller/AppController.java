@@ -33,8 +33,8 @@ public class AppController {
     @ResponseBody
     public Object putSession(HttpSession session) {
         if (session.getAttribute("user") == null) {
-            session.setAttribute("user", this + environment.getProperty("server.port"));
+            session.setAttribute("user", this + "-" + environment.getProperty("server.port"));
         }
-        return session;
+        return session.getAttribute("user");
     }
 }
