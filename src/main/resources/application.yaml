@@ -14,5 +14,7 @@ management:
   port: 0
 server:
   port: 9999
+  session:
+    timeout: 1800
 logging:
   config: classpath:logback-spring-boot.xml
