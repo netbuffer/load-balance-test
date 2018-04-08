@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Slf4j
@@ -23,18 +24,38 @@ public class AppController {
     private Environment environment;
 
     @RequestMapping(method = RequestMethod.GET)
-    public String get(ModelMap model) {
+    public String get(ModelMap model, HttpSession session, HttpServletRequest request) {
         log.info("get method");
+        if (session.getAttribute("user") == null) {
+            session.setAttribute("user", this + "-" + environment.getProperty("server.port"));
+        }
+        model.addAttribute("ip", getRemortIP(request));
         model.addAttribute("env", environment);
         return "app";
     }
 
-    @RequestMapping(value = "putsession", method = RequestMethod.GET)
-    @ResponseBody
-    public Object putSession(HttpSession session) {
-        if (session.getAttribute("user") == null) {
-            session.setAttribute("user", this + "-" + environment.getProperty("server.port"));
+    public static String getRemortIP(HttpServletRequest request) {
+        String ip = request.getHeader("x-forwarded-for");
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("Proxy-Client-IP");
         }
-        return session.getAttribute("user");
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("WL-Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getRemoteAddr();
+        }
+        if (ip.indexOf(",") > 0) {
+            ip = ip.substring(0, ip.indexOf(","));
+
+        }
+        return ip;
+    }
+
+    @RequestMapping(value = "putsession", method = RequestMethod.POST)
+    @ResponseBody
+    public Object putSession(HttpSession session, String key, String val) {
+        session.setAttribute(key, val);
+        return session.getAttribute(key);
     }
 }

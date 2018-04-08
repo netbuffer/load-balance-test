@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <title th:text="${env.getProperty('spring.application.name')}"></title>
 </head>
 <body>
-    server.port:<span th:text="${env.getProperty('server.port')}"></span><br/>
-    user:<span th:text="${session.user}"></span>
+server.port:<span th:text="${env.getProperty('server.port')}"></span><br/>
+sessionAttributes:<span th:text="${#ctx.sessionAttributes}"></span><br/>
+sessionId:<span th:text="${#httpSession.id}"></span><br/>
+your ip:<span th:text="${ip}"></span><br/>
+locale country: <span th:text="${#locale.country}">US</span><br/>
 </body>
 </html>
