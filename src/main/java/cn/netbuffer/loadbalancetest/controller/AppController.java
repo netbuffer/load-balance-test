@@ -28,6 +28,8 @@ public class AppController {
         log.info("get method");
         if (session.getAttribute("user") == null) {
             session.setAttribute("user", this + "-" + environment.getProperty("server.port"));
+            session.setAttribute("jdk", System.getProperty("java.version"));
+            session.setAttribute("computer", System.getenv("COMPUTERNAME") + "-" + System.getenv("USERNAME"));
         }
         model.addAttribute("ip", getRemortIP(request));
         model.addAttribute("env", environment);

@@ -5,13 +5,13 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
     <meta charset="UTF-8"/>
-    <title th:text="${env.getProperty('spring.application.name')+'-'+env.getProperty('server.port')}">标题</title>
+    <title th:text="${session.computer+'-'+env.getProperty('spring.application.name')+'-'+env.getProperty('server.port')}">标题</title>
 </head>
 <body>
 server.port:<span th:text="${env.getProperty('server.port')}">server.port</span><br/>
 sessionAttributes:<span th:text="${#ctx.sessionAttributes}">sessionAttributes</span><br/>
 sessionId:<span th:text="${#httpSession.id}">session.id</span><br/>
-your ip:<span th :text="${ip}">ip</span><br/>
+your ip:<span th:text="${ip}">ip</span><br/>
 locale country: <span th:text="${#locale.country}">US</span><br/>
 </body>
 </html>
