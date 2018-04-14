@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.concurrent.atomic.AtomicLong;
 
 @Slf4j
 @Controller
@@ -22,6 +23,7 @@ public class AppController {
     private ApplicationContext applicationContext;
     @Resource
     private Environment environment;
+    private AtomicLong requestCount = new AtomicLong();
 
     @RequestMapping(method = RequestMethod.GET)
     public String get(ModelMap model, HttpSession session, HttpServletRequest request) {
@@ -59,5 +61,17 @@ public class AppController {
     public Object putSession(HttpSession session, String key, String val) {
         session.setAttribute(key, val);
         return session.getAttribute(key);
+    }
+
+    @RequestMapping(value = "get", method = RequestMethod.GET)
+    @ResponseBody
+    public long getRequest() {
+        return requestCount.getAndIncrement();
+    }
+
+    @RequestMapping(value = "requestcount", method = RequestMethod.GET)
+    @ResponseBody
+    public long getRequestCount() {
+        return requestCount.get();
     }
 }
