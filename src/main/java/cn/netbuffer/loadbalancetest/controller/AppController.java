@@ -5,8 +5,10 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -65,7 +67,11 @@ public class AppController {
 
     @RequestMapping(value = "get", method = RequestMethod.GET)
     @ResponseBody
-    public long getRequest() {
+    public long getRequest(@RequestParam(value = "name", required = false) String name,
+                           @RequestParam(value = "pwd", required = false) String pwd) {
+        if (!StringUtils.isEmpty(name)) {
+            log.info("name:{},pwd:{}", name, pwd);
+        }
         return requestCount.getAndIncrement();
     }
 
