@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Slf4j
@@ -79,5 +83,15 @@ public class AppController {
     @ResponseBody
     public long getRequestCount() {
         return requestCount.get();
+    }
+
+    @RequestMapping(value = "getLocalHost", method = RequestMethod.GET)
+    @ResponseBody
+    public Map getLocalHost() throws UnknownHostException {
+        InetAddress address = InetAddress.getLocalHost();
+        Map data = new HashMap(2);
+        data.put("hostName", address.getHostName());
+        data.put("address", address.getHostAddress());
+        return data;
     }
 }
